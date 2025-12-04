@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashish Devkota - Cybersecurity Researcher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fafaf8;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom cursor effect */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #2d5f4f;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(250, 250, 248, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            font-size: 0.9rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #2d5f4f;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            padding: 8rem 5% 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-content h1 .accent {
+            font-style: italic;
+            color: #2d5f4f;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-content h1 .accent::after {
+            content: '';
+            position: absolute;
+            bottom: 0.2em;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #2d5f4f;
+            transform: scaleX(0);
+            transform-origin: right;
+            animation: underlineGrow 1.5s ease forwards 0.5s;
+        }
+
+        @keyframes underlineGrow {
+            to { transform: scaleX(1); transform-origin: left; }
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding-left: 2rem;
+            border-left: 1px solid #ddd;
+        }
+
+        .meta-item {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .meta-item:nth-child(1) { animation-delay: 0.2s; }
+        .meta-item:nth-child(2) { animation-delay: 0.4s; }
+        .meta-item:nth-child(3) { animation-delay: 0.6s; }
+        .meta-item:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .meta-item label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-item p {
+            font-size: 1rem;
+            color: #1a1a1a;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 0;
+            transition: all 0.3s;
+            display: inline-block;
+            border: 1px solid #1a1a1a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: #fafaf8;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #2d5f4f;
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #1a1a1a;
+        }
+
+        .btn-secondary:hover {
+            background: #1a1a1a;
+            color: #fafaf8;
+        }
+
+        /* Expertise Section */
+        .expertise {
+            padding: 8rem 5%;
+            background: #f5f4f0;
+        }
+
+        .section-header {
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-number {
+            font-size: 0.9rem;
+            color: #999;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .skill-card {
+            padding: 2.5rem;
+            background: #fafaf8;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            border: 1px solid transparent;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(45, 95, 79, 0.1);
+        }
+
+        .skill-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .skill-card ul {
+            list-style: none;
+            color: #666;
+        }
+
+        .skill-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        .skill-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 8rem 5%;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 1rem 0;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(8px);
+        }
+
+        .timeline-item:hover .timeline-date .year {
+            color: #2d5f4f;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 200px;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(to bottom, #2d5f4f, transparent);
+        }
+
+        .timeline-date {
+            text-align: right;
+            padding-right: 3rem;
+        }
+
+        .timeline-date .year {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #1a1a1a;
+            transition: color 0.3s ease;
+        }
+
+        .timeline-date .duration {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 0.5rem;
+        }
+
+        .timeline-content {
+            padding-left: 3rem;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .timeline-content .company {
+            color: #2d5f4f;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            color: #666;
+        }
+
+        .timeline-content li {
+            padding: 0.7rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #2d5f4f;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 8rem 5%;
+            background: #2d5f4f;
+            color: #fafaf8;
+        }
+
+        .projects .section-number,
+        .projects .section-title {
+            color: #fafaf8;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .project-card {
+            background: rgba(255,255,255,0.05);
+            padding: 3rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.02);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .project-card:hover {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            transform: translateY(-6px);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-number {
+            font-size: 3rem;
+            font-weight: 200;
+            opacity: 0.3;
+            margin-bottom: 1rem;
+            transition: all 0.4s ease;
+        }
+
+        .project-card:hover .project-number {
+            opacity: 0.5;
+            transform: translateX(8px);
+        }
+
+        .project-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            position: relative;
+            display: inline-block;
+        }
+
+        .project-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: rgba(255,255,255,0.6);
+            transition: width 0.4s ease;
+        }
+
+        .project-card:hover h3::after {
+            width: 100%;
+        }
+
+        .project-card p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .tag {
+            padding: 0.4rem 1rem;
+            background: rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .project-card:hover .tag {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .project-card:hover .tag:nth-child(1) { transition-delay: 0.05s; }
+        .project-card:hover .tag:nth-child(2) { transition-delay: 0.1s; }
+        .project-card:hover .tag:nth-child(3) { transition-delay: 0.15s; }
+        .project-card:hover .tag:nth-child(4) { transition-delay: 0.2s; }
+
+        /* Contact Section */
+        .contact {
+            padding: 8rem 5%;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            padding: 1.2rem 3rem;
+            text-decoration: none;
+            color: #1a1a1a;
+            border: 1px solid #ddd;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .contact-link:hover {
+            color: #fafaf8;
+            border-color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        .contact-link:hover::before {
+            left: 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 6rem;
+            }
+
+            .hero-meta {
+                padding-left: 0;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                padding-top: 2rem;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .timeline-item::before {
+                display: none;
+            }
+
+            .timeline-date {
+                text-align: left;
+                padding-right: 0;
+            }
+
+            .timeline-content {
+                padding-left: 0;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Ashish Devkota</div>
+        <ul class="nav-links">
+            <li><a href="#expertise">Expertise</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>
+                Building <span class="accent">secure</span><br>
+                digital futures
+            </h1>
+            <p class="subtitle">
+                Cybersecurity researcher specializing in IoT security, machine learning-driven threat detection, and enterprise security architecture.
+            </p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Get in Touch</a>
+                <a href="#projects" class="btn btn-secondary">View Work</a>
+            </div>
+        </div>
+        <div class="hero-meta">
+            <div class="meta-item">
+                <label>Current Focus</label>
+                <p>MSc Computing Research<br>Cybersecurity & Generative AI</p>
+            </div>
+            <div class="meta-item">
+                <label>Location</label>
+                <p>Uxbridge, England, UK</p>
+            </div>
+            <div class="meta-item">
+                <label>Specialization</label>
+                <p>IoT Security, DDoS Detection<br>ML Threat Detection</p>
+            </div>
+            <div class="meta-item">
+                <label>Availability</label>
+                <p>Open to opportunities</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="expertise" class="expertise">
+        <div class="section-header fade-in">
+            <div class="section-number">01 — Expertise</div>
+            <h2 class="section-title">Technical Arsenal</h2>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card fade-in">
+                <h3>Security Tools</h3>
+                <ul>
+                    <li>SIEM Platforms</li>
+                    <li>Metasploit</li>
+                    <li>Vulnerability Scanners</li>
+                    <li>IDS/IPS Systems</li>
+                    <li>Threat Intelligence Tools</li>
+                </ul>
+            </div>
+            <div class="skill-card fade-in">
+                <h3>Development</h3>
+                <ul>
+                    <li>Python</li>
+                    <li>Java</li>
+                    <li>SQL</li>
+                    <li>HTML/CSS/JavaScript</li>
+                    <li>System Scripting</li>
+                </ul>
+            </div>
+            <div class="skill-card fade-in">
+                <h3>Machine Learning</h3>
+                <ul>
+                    <li>Anomaly Detection</li>
+                    <li>Supervised Learning</li>
+                    <li>Unsupervised Learning</li>
+                    <li>Model Optimization</li>
+                    <li>Threat Classification</li>
+                </ul>
+            </div>
+            <div class="skill-card fade-in">
+                <h3>Infrastructure</h3>
+                <ul>
+                    <li>Network Security</li>
+                    <li>Cloud Security Frameworks</li>
+                    <li>System Hardening</li>
+                    <li>Linux & Windows Server</li>
+                    <li>Access Controls</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="experience">
+        <div class="section-header fade-in">
+            <div class="section-number">02 — Experience</div>
+            <h2 class="section-title">Professional Journey</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">
+                    <div class="year">2025</div>
+                    <div class="duration">Current</div>
+                </div>
+                <div class="timeline-content">
+                    <h3>MSc Computing Research</h3>
+                    <div class="company">University of Buckingham</div>
+                    <ul>
+                        <li>Researching cybersecurity applications of generative AI</li>
+                        <li>Focus on advanced threat detection and IoT security</li>
+                        <li>Developing novel ML-based security frameworks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">
+                    <div class="year">2020</div>
+                    <div class="duration">11 months</div>
+                </div>
+                <div class="timeline-content">
+                    <h3>Information Technology Officer</h3>
+                    <div class="company">BSR Movies, Kathmandu</div>
+                    <ul>
+                        <li>Protected customer data across databases, ticketing, and streaming platforms</li>
+                        <li>Managed IT infrastructure supporting 50,000+ monthly users with 99.5% uptime</li>
+                        <li>Reduced security incidents through access controls and vulnerability assessments</li>
+                        <li>Resolved 95% of technical issues within SLA for digital media services</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-date">
+                    <div class="year">2018</div>
+                    <div class="duration">2 years</div>
+                </div>
+                <div class="timeline-content">
+                    <h3>Information Technology Officer</h3>
+                    <div class="company">Tila Rural Municipality, Nepal</div>
+                    <ul>
+                        <li>Architected secure municipal network infrastructure for 200+ users</li>
+                        <li>Implemented data protection for sensitive government records and e-services</li>
+                        <li>Reduced IT downtime by 40% through proactive monitoring and maintenance</li>
+                        <li>Trained 150+ staff on security best practices and digital literacy</li>
+                        <li>Led digitization initiatives improving rural digital accessibility</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <div class="section-header fade-in">
+            <div class="section-number">03 — Projects</div>
+            <h2 class="section-title">Featured Work</h2>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card fade-in">
+                <div class="project-number">01</div>
+                <h3>DDoS & IoT Attack Detection System</h3>
+                <p>Developed ML models achieving 95%+ accuracy in detecting anomalous network traffic and high-volume DDoS attacks on IoT devices.</p>
+                <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">scikit-learn</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">IoT Security</span>
+                </div>
+            </div>
+
+            <div class="project-card fade-in">
+                <div class="project-number">02</div>
+                <h3>Real-time Vulnerability Assessment Platform</h3>
+                <p>Engineered automated security monitoring system performing continuous vulnerability scans, risk assessment, and remediation tracking.</p>
+                <div class="project-tags">
+                    <span class="tag">Security Automation</span>
+                    <span class="tag">Risk Assessment</span>
+                    <span class="tag">SIEM</span>
+                    <span class="tag">Enterprise Security</span>
+                </div>
+            </div>
+
+            <div class="project-card fade-in">
+                <div class="project-number">03</div>
+                <h3>Cloud Security Optimization</h3>
+                <p>Collaborated with engineering teams to implement security frameworks and network hardening measures, reducing attack surface and improving compliance scores.</p>
+                <div class="project-tags">
+                    <span class="tag">Cloud Security</span>
+                    <span class="tag">Network Hardening</span>
+                    <span class="tag">Compliance</span>
+                    <span class="tag">Infrastructure</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Let's Connect</h2>
+        <p>Open to opportunities in cybersecurity engineering, SOC analysis, and AI security roles. Available for consulting, collaboration, or full-time positions.</p>
+        <div class="contact-links">
+            <a href="mailto:ashishdevkota03@gmail.com" class="contact-link">Email Me</a>
+            <a href="https://linkedin.com/in/ashish-devkota" target="_blank" class="contact-link">LinkedIn</a>
+            <a href="tel:+447915809745" class="contact-link">Call</a>
+        </div>
+    </section>
+
+    <footer>
+        <div>&copy; 2024 Ashish Devkota. All rights reserved.</div>
+        <div>Designed with intention</div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.querySelectorAll('.section-header').forEach(el => observer.observe(el));
+
+        // Navbar background on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.05)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
